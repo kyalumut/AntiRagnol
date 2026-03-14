@@ -3,18 +3,17 @@ local Players = game:GetService("Players")
 local LP = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
-local TweenService = game:GetService("TweenService")
 
 local CorrectKey = "XenonHub"
 local Features = { AntiFling = true, AutoHit = false, ESP = true, HitboxSize = 6, ReachDistance = 14 }
 
--- Eski UI temizle
+-- UI Temizleme
 pcall(function() if CoreGui:FindFirstChild("XenonSystem") then CoreGui.XenonSystem:Destroy() end end)
 
 local SG = Instance.new("ScreenGui", CoreGui)
 SG.Name = "XenonSystem"
 
--- [[ KEY SYSTEM UI ]] --
+-- [[ KEY GIRIŞ EKRANI ]] --
 local KeyMain = Instance.new("Frame", SG)
 KeyMain.Size = UDim2.new(0, 300, 0, 150)
 KeyMain.Position = UDim2.new(0.5, -150, 0.4, -75)
@@ -25,7 +24,7 @@ Instance.new("UIStroke", KeyMain).Color = Color3.fromRGB(170, 0, 255)
 
 local KeyTitle = Instance.new("TextLabel", KeyMain)
 KeyTitle.Size = UDim2.new(1, 0, 0, 40)
-KeyTitle.Text = "XENON HUB | KEY SYSTEM"
+KeyTitle.Text = "XENON HUB | ANAHTAR SISTEMI"
 KeyTitle.TextColor3 = Color3.new(1, 1, 1)
 KeyTitle.Font = Enum.Font.GothamBold
 KeyTitle.TextSize = 16
@@ -36,7 +35,7 @@ KeyInput.Size = UDim2.new(0.8, 0, 0, 35)
 KeyInput.Position = UDim2.new(0.1, 0, 0.35, 0)
 KeyInput.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 KeyInput.Text = ""
-KeyInput.PlaceholderText = "Anahtarı Girin..."
+KeyInput.PlaceholderText = "Anahtari Buraya Yaz..."
 KeyInput.TextColor3 = Color3.new(1, 1, 1)
 Instance.new("UICorner", KeyInput).CornerRadius = UDim.new(0, 8)
 
@@ -44,12 +43,12 @@ local KeyBtn = Instance.new("TextButton", KeyMain)
 KeyBtn.Size = UDim2.new(0.8, 0, 0, 35)
 KeyBtn.Position = UDim2.new(0.1, 0, 0.65, 0)
 KeyBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-KeyBtn.Text = "GİRİŞ YAP"
+KeyBtn.Text = "GIRIS YAP"
 KeyBtn.TextColor3 = Color3.new(1, 1, 1)
 KeyBtn.Font = Enum.Font.GothamBold
 Instance.new("UICorner", KeyBtn).CornerRadius = UDim.new(0, 8)
 
--- [[ MAIN HUB UI (Gizli Başlar) ]] --
+-- [[ ANA HUB EKRANI ]] --
 local Main = Instance.new("Frame", SG)
 Main.Size = UDim2.new(0, 220, 0, 280)
 Main.Position = UDim2.new(0.5, -110, 0.4, -140)
@@ -58,7 +57,6 @@ Main.Visible = false
 Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 15)
 local MainStroke = Instance.new("UIStroke", Main)
 MainStroke.Color = Color3.fromRGB(170, 0, 255)
-MainStroke.Thickness = 2
 
 local Banner = Instance.new("TextLabel", Main)
 Banner.Size = UDim2.new(1, 0, 0, 50)
@@ -86,11 +84,11 @@ local function CreateToggle(text, pos, feat)
     end)
 end
 
-CreateToggle("CELIK DUVAR", UDim2.new(0.075, 0, 0.25, 0), "AntiFling")
+CreateToggle("CELIK DUVAR (FLY-FIX)", UDim2.new(0.075, 0, 0.25, 0), "AntiFling")
 CreateToggle("SMART AUTO-HIT", UDim2.new(0.075, 0, 0.42, 0), "AutoHit")
-CreateToggle("ULTRA ESP", UDim2.new(0.075, 0, 0.59, 0), "ESP")
+CreateToggle("XENON ESP", UDim2.new(0.075, 0, 0.59, 0), "ESP")
 
--- [[ KEY LOGIC ]] --
+-- Key Kontrol
 KeyBtn.MouseButton1Click:Connect(function()
     if KeyInput.Text == CorrectKey then
         KeyMain:Destroy()
@@ -99,13 +97,11 @@ KeyBtn.MouseButton1Click:Connect(function()
         Main.Active = true
     else
         KeyInput.Text = ""
-        KeyInput.PlaceholderText = "HATALI KEY!"
-        wait(1)
-        KeyInput.PlaceholderText = "Tekrar Deneyin..."
+        KeyInput.PlaceholderText = "HATALI ANAHTAR!"
     end
 end)
 
--- [[ ENGINE ]] --
+-- Ana Script Döngüsü
 RunService.RenderStepped:Connect(function()
     if not Main.Visible then return end
     pcall(function()
